@@ -3,8 +3,9 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 
-	"github.com/gophercises/urlshort"
+	"github.com/joshzappone/urlshort"
 )
 
 func main() {
@@ -25,6 +26,14 @@ func main() {
 - path: /urlshort-final
   url: https://github.com/gophercises/urlshort/tree/solution
 `
+
+	// open yaml file and get []byte
+	yamlUrls, err := os.ReadFile("urls.yaml")
+	if err != nil {
+		os.Exit(2)
+		fmt.Printf("Oh no! Error: %s", err)
+	}
+
 	yamlHandler, err := urlshort.YAMLHandler([]byte(yaml), mapHandler)
 	if err != nil {
 		panic(err)
